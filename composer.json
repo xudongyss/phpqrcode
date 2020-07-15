@@ -1,0 +1,18 @@
+{
+    "name": "xudongyss/phpqrcode",
+    "description": "PHP Qr Code",
+    "type": "library",
+    "authors": [
+        {
+            "name": "xudongyss",
+            "email": "xudong.yss@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "phpqrcode\\": "src/"
+        }
+    }
+}
