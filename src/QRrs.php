@@ -2,7 +2,7 @@
 namespace phpqrcode;
 
 class QRrs {
-
+    
     public static $items = array();
     
     //----------------------------------------------------------------------
@@ -15,13 +15,13 @@ class QRrs {
             if($rs->gfpoly != $gfpoly) continue;
             if($rs->fcr != $fcr)       continue;
             if($rs->prim != $prim)     continue;
-
+            
             return $rs;
         }
-
+        
         $rs = QRrsItem::init_rs_char($symsize, $gfpoly, $fcr, $prim, $nroots, $pad);
         array_unshift(self::$items, $rs);
-
+        
         return $rs;
     }
 }
