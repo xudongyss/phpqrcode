@@ -2,7 +2,7 @@
 namespace phpqrcode;
 
 class QRtools {
-
+    
     //----------------------------------------------------------------------
     public static function binarize($frame)
     {
@@ -25,27 +25,27 @@ class QRtools {
         if (!is_array($mode))
             $mode = explode(',', $mode);
             
-        $eccLevel = 'L';
+            $eccLevel = 'L';
             
-        if (count($mode) > 1) {
-            $eccLevel = $mode[1];
-        }
+            if (count($mode) > 1) {
+                $eccLevel = $mode[1];
+            }
             
-        $qrTab = QRcode::text($code, false, $eccLevel);
-        $size = count($qrTab);
+            $qrTab = QRcode::text($code, false, $eccLevel);
+            $size = count($qrTab);
             
-        $barcode_array['num_rows'] = $size;
-        $barcode_array['num_cols'] = $size;
-        $barcode_array['bcode'] = array();
+            $barcode_array['num_rows'] = $size;
+            $barcode_array['num_cols'] = $size;
+            $barcode_array['bcode'] = array();
             
-        foreach ($qrTab as $line) {
-            $arrAdd = array();
-            foreach(str_split($line) as $char)
-                $arrAdd[] = ($char=='1')?1:0;
-            $barcode_array['bcode'][] = $arrAdd;
-        }
-                
-        return $barcode_array;
+            foreach ($qrTab as $line) {
+                $arrAdd = array();
+                foreach(str_split($line) as $char)
+                    $arrAdd[] = ($char=='1')?1:0;
+                    $barcode_array['bcode'][] = $arrAdd;
+            }
+            
+            return $barcode_array;
     }
     
     //----------------------------------------------------------------------
@@ -57,25 +57,25 @@ class QRtools {
     //----------------------------------------------------------------------
     public static function buildCache()
     {
-		QRtools::markTime('before_build_cache');
-		
-		$mask = new QRmask();
+        QRtools::markTime('before_build_cache');
+        
+        $mask = new QRmask();
         for ($a=1; $a <= QRSPEC_VERSION_MAX; $a++) {
             $frame = QRspec::newFrame($a);
             if (QR_IMAGE) {
                 $fileName = QR_CACHE_DIR.'frame_'.$a.'.png';
                 QRimage::png(self::binarize($frame), $fileName, 1, 0);
             }
-			
-			$width = count($frame);
-			$bitMask = array_fill(0, $width, array_fill(0, $width, 0));
-			for ($maskNo=0; $maskNo<8; $maskNo++)
-				$mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
+            
+            $width = count($frame);
+            $bitMask = array_fill(0, $width, array_fill(0, $width, 0));
+            for ($maskNo=0; $maskNo<8; $maskNo++)
+                $mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
         }
-		
-		QRtools::markTime('after_build_cache');
+        
+        QRtools::markTime('after_build_cache');
     }
-
+    
     //----------------------------------------------------------------------
     public static function log($outfile, $err)
     {
@@ -86,12 +86,12 @@ class QRtools {
                 } else {
                     file_put_contents(QR_LOG_DIR.'errors.txt', date('Y-m-d H:i:s').': '.$err, FILE_APPEND);
                 }
-            }    
+            }
         }
     }
     
     //----------------------------------------------------------------------
-    public static function dumpMask($frame) 
+    public static function dumpMask($frame)
     {
         $width = count($frame);
         for($y=0;$y<$width;$y++) {
@@ -109,23 +109,23 @@ class QRtools {
         
         if (!isset($GLOBALS['qr_time_bench']))
             $GLOBALS['qr_time_bench'] = array();
-        
-        $GLOBALS['qr_time_bench'][$markerId] = $time;
+            
+            $GLOBALS['qr_time_bench'][$markerId] = $time;
     }
     
     //----------------------------------------------------------------------
     public static function timeBenchmark()
     {
         self::markTime('finish');
-    
+        
         $lastTime = 0;
         $startTime = 0;
         $p = 0;
-
+        
         echo '<table cellpadding="3" cellspacing="1">
-                <thead><tr style="border-bottom:1px solid silver"><td colspan="2" style="text-align:center">BENCHMARK</td></tr></thead>
-                <tbody>';
-
+                    <thead><tr style="border-bottom:1px solid silver"><td colspan="2" style="text-align:center">BENCHMARK</td></tr></thead>
+                    <tbody>';
+        
         foreach($GLOBALS['qr_time_bench'] as $markerId=>$thisTime) {
             if ($p > 0) {
                 echo '<tr><th style="text-align:right">till '.$markerId.': </th><td>'.number_format($thisTime-$lastTime, 6).'s</td></tr>';
@@ -138,9 +138,9 @@ class QRtools {
         }
         
         echo '</tbody><tfoot>
-            <tr style="border-top:2px solid black"><th style="text-align:right">TOTAL: </th><td>'.number_format($lastTime-$startTime, 6).'s</td></tr>
-        </tfoot>
-        </table>';
+                <tr style="border-top:2px solid black"><th style="text-align:right">TOTAL: </th><td>'.number_format($lastTime-$startTime, 6).'s</td></tr>
+            </tfoot>
+            </table>';
     }
     
 }
