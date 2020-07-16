@@ -2,10 +2,10 @@
 namespace phpqrcode;
 
 class QRcode {
-
+    
     public $version;
     public $width;
-    public $data; 
+    public $data;
     
     //----------------------------------------------------------------------
     public function encodeMask(QRinput $input, $mask)
@@ -16,7 +16,7 @@ class QRcode {
         if($input->getErrorCorrectionLevel() > QR_ECLEVEL_H) {
             throw new Exception('wrong level');
         }
-
+        
         $raw = new QRrawcode($input);
         
         QRtools::markTime('after_raw');
@@ -29,7 +29,7 @@ class QRcode {
         if(is_null($filler)) {
             return NULL;
         }
-
+        
         // inteleaved data and ecc codes
         for($i=0; $i<$raw->dataLength + $raw->eccLength; $i++) {
             $code = $raw->getCode();
@@ -59,7 +59,7 @@ class QRcode {
         // masking
         $maskObj = new QRmask();
         if($mask < 0) {
-        
+            
             if (QR_FIND_BEST_MASK) {
                 $masked = $maskObj->mask($width, $frame, $input->getErrorCorrectionLevel());
             } else {
@@ -81,7 +81,7 @@ class QRcode {
         
         return $this;
     }
-
+    
     //----------------------------------------------------------------------
     public function encodeInput(QRinput $input)
     {
@@ -95,10 +95,10 @@ class QRcode {
             throw new Exception('empty string!');
             return NULL;
         }
-
+        
         $input = new QRinput($version, $level);
         if($input == NULL) return NULL;
-
+        
         $ret = $input->append($input, QR_MODE_8, strlen($string), str_split($string));
         if($ret < 0) {
             unset($input);
@@ -106,43 +106,43 @@ class QRcode {
         }
         return $this->encodeInput($input);
     }
-
+    
     //----------------------------------------------------------------------
     public function encodeString($string, $version, $level, $hint, $casesensitive)
     {
-
+        
         if($hint != QR_MODE_8 && $hint != QR_MODE_KANJI) {
             throw new Exception('bad hint');
             return NULL;
         }
-
+        
         $input = new QRinput($version, $level);
         if($input == NULL) return NULL;
-
+        
         $ret = QRsplit::splitStringToQRinput($string, $input, $hint, $casesensitive);
         if($ret < 0) {
             return NULL;
         }
-
+        
         return $this->encodeInput($input);
     }
     
     //----------------------------------------------------------------------
-    public static function png($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4, $saveandprint=false) 
+    public static function png($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4, $saveandprint=false)
     {
         $enc = QRencode::factory($level, $size, $margin);
         return $enc->encodePNG($text, $outfile, $saveandprint=false);
     }
-
+    
     //----------------------------------------------------------------------
-    public static function text($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4) 
+    public static function text($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4)
     {
         $enc = QRencode::factory($level, $size, $margin);
         return $enc->encode($text, $outfile);
     }
-
+    
     //----------------------------------------------------------------------
-    public static function raw($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4) 
+    public static function raw($text, $outfile = false, $level = QR_ECLEVEL_L, $size = 3, $margin = 4)
     {
         $enc = QRencode::factory($level, $size, $margin);
         return $enc->encodeRAW($text, $outfile);
