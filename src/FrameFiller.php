@@ -1,8 +1,8 @@
 <?php
 namespace phpqrcode;
-    
-class FrameFiller {
 
+class FrameFiller {
+    
     public $width;
     public $frame;
     public $x;
@@ -37,16 +37,16 @@ class FrameFiller {
     public function next()
     {
         do {
-        
+            
             if($this->bit == -1) {
                 $this->bit = 0;
                 return array('x'=>$this->x, 'y'=>$this->y);
             }
-
+            
             $x = $this->x;
             $y = $this->y;
             $w = $this->width;
-
+            
             if($this->bit == 0) {
                 $x--;
                 $this->bit++;
@@ -55,7 +55,7 @@ class FrameFiller {
                 $y += $this->dir;
                 $this->bit--;
             }
-
+            
             if($this->dir < 0) {
                 if($y < 0) {
                     $y = 0;
@@ -78,12 +78,12 @@ class FrameFiller {
                 }
             }
             if($x < 0 || $y < 0) return null;
-
+            
             $this->x = $x;
             $this->y = $y;
-
+            
         } while(ord($this->frame[$y][$x]) & 0x80);
-                    
+        
         return array('x'=>$x, 'y'=>$y);
     }
     
