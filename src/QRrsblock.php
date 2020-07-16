@@ -10,7 +10,7 @@ class QRrsblock {
     public function __construct($dl, $data, $el, &$ecc, QRrsItem $rs)
     {
         $rs->encode_rs_char($data, $ecc);
-    
+        
         $this->dataLength = $dl;
         $this->data = $data;
         $this->eccLength = $el;
