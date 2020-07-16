@@ -12,7 +12,7 @@ define('QR_ECLEVEL_Q', 2);
 define('QR_ECLEVEL_H', 3);
 
 define('QR_FORMAT_TEXT', 0);
-define('QR_FORMAT_PNG',  1);
+define('QR_FORMAT_PNG', 1);
 
 /* use cache - more disk reads but less CPU power, masks and format templates are stored there */
 define('QR_CACHEABLE', false);
@@ -25,12 +25,22 @@ define('QR_FIND_BEST_MASK', true);
 define('QR_FIND_FROM_RANDOM', 2);
 define('QR_DEFAULT_MASK', 2);
 
-define('QR_PNG_MAXIMUM_SIZE',  1024);
+define('QR_PNG_MAXIMUM_SIZE', 1024);
 
 define('QRSPEC_VERSION_MAX', 40);
-define('QRSPEC_WIDTH_MAX',   177);
+define('QRSPEC_WIDTH_MAX', 177);
 
-define('QRCAP_WIDTH',        0);
-define('QRCAP_WORDS',        1);
-define('QRCAP_REMINDER',     2);
-define('QRCAP_EC',           3);
+define('QRCAP_WIDTH', 0);
+define('QRCAP_WORDS', 1);
+define('QRCAP_REMINDER', 2);
+define('QRCAP_EC', 3);
+
+define('QR_IMAGE', true);
+
+define('STRUCTURE_HEADER_BITS', 20);
+define('MAX_STRUCTURED_SYMBOLS', 16);
+
+define('N1', 3);
+define('N2', 3);
+define('N3', 40);
+define('N4', 10);
