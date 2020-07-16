@@ -2,7 +2,7 @@
 namespace phpqrcode;
 
 class QRencode {
-
+    
     public $casesensitive = true;
     public $eightbit = false;
     
@@ -27,23 +27,23 @@ class QRencode {
             case '1':
             case '2':
             case '3':
-                    $enc->level = $level;
+                $enc->level = $level;
                 break;
             case 'l':
             case 'L':
-                    $enc->level = QR_ECLEVEL_L;
+                $enc->level = QR_ECLEVEL_L;
                 break;
             case 'm':
             case 'M':
-                    $enc->level = QR_ECLEVEL_M;
+                $enc->level = QR_ECLEVEL_M;
                 break;
             case 'q':
             case 'Q':
-                    $enc->level = QR_ECLEVEL_Q;
+                $enc->level = QR_ECLEVEL_Q;
                 break;
             case 'h':
             case 'H':
-                    $enc->level = QR_ECLEVEL_H;
+                $enc->level = QR_ECLEVEL_H;
                 break;
         }
         
@@ -51,10 +51,10 @@ class QRencode {
     }
     
     //----------------------------------------------------------------------
-    public function encodeRAW($intext, $outfile = false) 
+    public function encodeRAW($intext, $outfile = false)
     {
         $code = new QRcode();
-
+        
         if($this->eightbit) {
             $code->encodeString8bit($intext, $this->version, $this->level);
         } else {
@@ -63,12 +63,12 @@ class QRencode {
         
         return $code->data;
     }
-
+    
     //----------------------------------------------------------------------
-    public function encode($intext, $outfile = false) 
+    public function encode($intext, $outfile = false)
     {
         $code = new QRcode();
-
+        
         if($this->eightbit) {
             $code->encodeString8bit($intext, $this->version, $this->level);
         } else {
@@ -85,10 +85,10 @@ class QRencode {
     }
     
     //----------------------------------------------------------------------
-    public function encodePNG($intext, $outfile = false,$saveandprint=false) 
+    public function encodePNG($intext, $outfile = false,$saveandprint=false)
     {
         try {
-        
+            
             ob_start();
             $tab = $this->encode($intext);
             $err = ob_get_contents();
@@ -96,15 +96,15 @@ class QRencode {
             
             if ($err != '')
                 QRtools::log($outfile, $err);
-            
-            $maxSize = (int)(QR_PNG_MAXIMUM_SIZE / (count($tab)+2*$this->margin));
-            
-            QRimage::png($tab, $outfile, min(max(1, $this->size), $maxSize), $this->margin,$saveandprint);
-        
+                
+                $maxSize = (int)(QR_PNG_MAXIMUM_SIZE / (count($tab)+2*$this->margin));
+                
+                QRimage::png($tab, $outfile, min(max(1, $this->size), $maxSize), $this->margin,$saveandprint);
+                
         } catch (Exception $e) {
-        
+            
             QRtools::log($outfile, $e->getMessage());
-        
+            
         }
     }
 }
