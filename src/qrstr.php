@@ -1,5 +1,5 @@
 <?php
-namespace phpqrcode;
+namespace XuDongYss\PhpQrCode;
 
 class qrstr {
     public static function set(&$srctab, $x, $y, $repl, $replLen = false) {

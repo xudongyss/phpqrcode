@@ -1,5 +1,5 @@
 <?php
-namespace phpqrcode;
+namespace XuDongYss\PhpQrCode;
 
 class QRrs {
     
